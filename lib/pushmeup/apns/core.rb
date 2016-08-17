@@ -80,7 +80,7 @@ protected
     rescue StandardError, Errno::EPIPE
       raise unless attempts < @retries
 
-      @ssl.close
+      @ssl.close unless @ssl.nil?
       @sock.close
 
       attempts += 1
@@ -89,7 +89,7 @@ protected
 
     # Only force close if not persistent
     unless @persistent
-      @ssl.close
+      @ssl.close unless @ssl.nil?
       @ssl = nil
       @sock.close
       @sock = nil
