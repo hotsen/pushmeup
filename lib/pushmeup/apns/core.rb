@@ -29,7 +29,7 @@ module APNS
     @persistent = false
 
     @ssl.close unless @ssl.nil?
-    @sock.close
+    @sock.close unless @sock.nil?
   end
 
   def self.send_notification(device_token, message)
@@ -81,7 +81,7 @@ protected
       raise unless attempts < @retries
 
       @ssl.close unless @ssl.nil?
-      @sock.close
+      @sock.close unless @sock.nil?
 
       attempts += 1
       retry
@@ -91,7 +91,7 @@ protected
     unless @persistent
       @ssl.close unless @ssl.nil?
       @ssl = nil
-      @sock.close
+      @sock.close unless @sock.nil?
       @sock = nil
     end
   end
